@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Wave — Digital Product Studio | Los Angeles, CA</title>
+  <meta name="description" content="Cyber Wave is a full-stack digital product studio based in Los Angeles, CA. We engineer scalable web platforms, custom SaaS, and financial tech systems for ambitious businesses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital@1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!--
+  ╔══════════════════════════════════════════════╗
+  ║  EMAIL SETUP — READ BEFORE GOING LIVE        ║
+  ╠══════════════════════════════════════════════╣
+  ║  1. Go to https://emailjs.com (free account) ║
+  ║  2. Add a Gmail service & connect your       ║
+  ║     cabrixjr@gmail.com account               ║
+  ║  3. Create a template with these variables:  ║
+  ║     {{from_name}}  {{from_email}}            ║
+  ║     {{service}}    {{budget}}                ║
+  ║     {{timeline}}   {{message}}               ║
+  ║  4. Replace these 3 values in the JS below:  ║
+  ║     EMAILJS_PUBLIC_KEY                       ║
+  ║     EMAILJS_SERVICE_ID                       ║
+  ║     EMAILJS_TEMPLATE_ID                      ║
+  ╚══════════════════════════════════════════════╝
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <style>
+    /* ══════════════════════════════════════════
+       VARIABLES
+    ══════════════════════════════════════════ */
+    :root {
+      --bg:          #07090D;
+      --bg2:         #0C1018;
+      --bg3:         #111722;
+      --border:      rgba(255,255,255,0.07);
+      --border-a:    rgba(0,229,195,0.22);
+      --text:        #EDF2F7;
+      --muted:       #64748B;
+      --dim:         #94A3B8;
+      --accent:      #00E5C8;
+      --accent-bg:   rgba(0,229,195,0.10);
+      --accent-glow: rgba(0,229,195,0.28);
+      --r:           12px;
+      --rl:          20px;
+      --ease:        cubic-bezier(0.25,0.46,0.45,0.94);
+      --t:           0.32s var(--ease);
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ══════════════════════════════════════════
+       TYPOGRAPHY
+    ══════════════════════════════════════════ */
+    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.08; }
+    /* Accent italic words in headings get Playfair Display */
+    h1 em, h2 em, h3 em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--accent);
+    }
+    .label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); display: block;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    section { padding: 120px 0; }
+
+    /* ══════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200; padding: 22px 0; transition: var(--t);
+    }
+    nav.scrolled {
+      background: rgba(7,9,13,0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800; font-size: 19px; letter-spacing: -0.02em;
+    }
+    .logo em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 10px 22px;
+      border: 1px solid var(--accent); border-radius: 6px;
+      font-size: 13px; font-weight: 600; color: var(--accent) !important; transition: var(--t) !important;
+    }
+    .nav-cta:hover { background: var(--accent) !important; color: var(--bg) !important; }
+
+    .burger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--t); }
+
+    .mmenu {
+      display: none; position: fixed; inset: 0;
+      background: var(--bg); z-index: 199;
+      flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+    }
+    .mmenu.open { display: flex; }
+    .mmenu a { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 34px; font-weight: 700; color: var(--muted); transition: color 0.2s; }
+    .mmenu a:hover { color: var(--accent); }
+    .mmenu-close { position: absolute; top: 22px; right: 24px; font-size: 26px; color: var(--muted); cursor: pointer; transition: color 0.2s; }
+    .mmenu-close:hover { color: var(--text); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    #home {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden; padding: 0;
+    }
+    .hero-ambient {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 55% at 72% 48%, rgba(0,229,195,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 55% at 18% 82%, rgba(0,229,195,0.04) 0%, transparent 60%);
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+    .hero-wrap {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 1200px;
+      margin: 0 auto; padding: 0 28px; padding-top: 90px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--border-a); border-radius: 100px;
+      font-size: 12px; font-weight: 500; color: var(--accent);
+      background: var(--accent-bg); margin-bottom: 36px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; background: var(--accent);
+      border-radius: 50%; animation: blink 2.2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
+
+    .hero-h1 {
+      font-size: clamp(56px, 9vw, 112px); font-weight: 800;
+      letter-spacing: -0.035em; line-height: 0.93; margin-bottom: 30px;
+    }
+    .hero-h1 .line { display: block; overflow: hidden; }
+    .hero-h1 .line span { display: block; animation: up 0.85s cubic-bezier(0.16,1,0.3,1) both; }
+    .hero-h1 .line:nth-child(2) span { animation-delay: 0.1s; }
+    .hero-h1 .line:nth-child(3) span { animation-delay: 0.2s; }
+    @keyframes up { from{transform:translateY(105%);opacity:0} to{transform:translateY(0);opacity:1} }
+    .hero-h1 .c { color: var(--accent); font-family: 'Playfair Display', serif; font-style: italic; }
+    .hero-h1 .o { -webkit-text-stroke: 2px var(--text); color: transparent; }
+
+    .hero-p {
+      font-size: 17px; color: var(--dim); max-width: 500px; line-height: 1.72;
+      margin-bottom: 44px; animation: fin 0.9s 0.4s both;
+    }
+    @keyframes fin { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; animation: fin 0.9s 0.52s both; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; background: var(--accent); color: var(--bg);
+      border-radius: 8px; font-weight: 600; font-size: 15px; transition: var(--t);
+    }
+    .btn-primary:hover { background: #14fde3; transform: translateY(-2px); box-shadow: 0 14px 44px var(--accent-glow); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border: 1px solid var(--border); color: var(--dim);
+      border-radius: 8px; font-weight: 500; font-size: 15px; transition: var(--t);
+    }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--muted); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      animation: fin 1s 1.1s both;
+    }
+    .scroll-bar { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--accent), transparent); animation: sb 2.2s infinite; }
+    @keyframes sb { 0%,100%{opacity:0.25;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(0.65)} }
+
+    /* ══════════════════════════════════════════
+       STATS
+    ══════════════════════════════════════════ */
+    .stats-row { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); }
+    .stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 52px 32px; text-align: center; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+    .stat-val sup { font-size: 24px; color: var(--accent); vertical-align: super; }
+    .stat-lbl { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+    /* ══════════════════════════════════════════
+       TECH STACK MARQUEE
+    ══════════════════════════════════════════ */
+    .marquee-wrap {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0; overflow: hidden;
+      background: var(--bg);
+    }
+    .marquee-label {
+      text-align: center;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 18px;
+    }
+    .marquee-track { display: flex; gap: 0; white-space: nowrap; }
+    .marquee-inner {
+      display: flex; align-items: center; gap: 40px;
+      animation: marquee 28s linear infinite;
+      padding: 0 20px;
+    }
+    .marquee-inner:nth-child(2) { animation-delay: -14s; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-100%)} }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.04em; white-space: nowrap;
+    }
+    .marquee-item .mdot {
+      width: 5px; height: 5px; background: var(--accent); border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION HEADERS
+    ══════════════════════════════════════════ */
+    .sh { margin-bottom: 72px; }
+    .sh.c { text-align: center; }
+    .sh h2 { font-size: clamp(34px, 4.5vw, 54px); font-weight: 800; letter-spacing: -0.03em; margin-top: 12px; }
+    .sh p { font-size: 16px; color: var(--muted); margin-top: 14px; max-width: 500px; line-height: 1.72; }
+    .sh.c p { margin-left: auto; margin-right: auto; }
+
+    /* ══════════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════════ */
+    #about { background: var(--bg); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--rl); padding: 44px; position: relative; overflow: hidden;
+    }
+    .about-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .about-card-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .about-card-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 500; color: var(--text); line-height: 1.65; margin-bottom: 28px; }
+    .about-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .chip {
+      padding: 11px 14px; background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--dim);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .chip::before { content: ''; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+    .about-badge {
+      position: absolute; bottom: -18px; right: -18px;
+      width: 110px; height: 110px; border: 1px solid var(--border-a);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--bg2); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px; font-weight: 700; color: var(--accent); text-align: center; line-height: 1.4;
+    }
+    .about-right h3 { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
+    .about-right p { font-size: 15px; color: var(--muted); line-height: 1.76; margin-bottom: 14px; }
+    .about-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; color: var(--accent);
+      margin-top: 6px; transition: gap 0.2s;
+    }
+    .about-link:hover { gap: 14px; }
+
+    /* ══════════════════════════════════════════
+       SERVICES (SVG icons)
+    ══════════════════════════════════════════ */
+    #services { background: var(--bg2); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .svc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--rl); padding: 36px;
+      transition: var(--t); position: relative; overflow: hidden;
+    }
+    .svc::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 10%, var(--accent-bg), transparent 55%);
+      opacity: 0; transition: opacity var(--t);
+    }
+    .svc:hover { border-color: var(--border-a); transform: translateY(-5px); box-shadow: 0 22px 60px rgba(0,0,0,0.4); }
+    .svc:hover::after { opacity: 1; }
+    .svc-icon {
+      width: 48px; height: 48px;
+      background: var(--accent-bg); border: 1px solid var(--border-a);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px; color: var(--accent);
+    }
+    .svc-icon svg { width: 22px; height: 22px; }
+    .svc h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .svc p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .svc-list { display: flex; flex-direction: column; gap: 7px; }
+    .svc-list li {
+      font-size: 13px; color: var(--dim);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .svc-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+
+    /* Payment badges inside e-commerce card */
+    .pay-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .pay-badge {
+      padding: 4px 10px; border-radius: 100px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .pay-mpesa  { background: rgba(0,165,81,0.15);  color: #00A551; border: 1px solid rgba(0,165,81,0.3); }
+    .pay-airtel { background: rgba(226,35,26,0.12);  color: #E2231A; border: 1px solid rgba(226,35,26,0.3); }
+    .pay-tigo   { background: rgba(0,100,180,0.12);  color: #4A9AE8; border: 1px solid rgba(0,100,180,0.3); }
+    .pay-halotel{ background: rgba(247,148,29,0.12); color: #F7941D; border: 1px solid rgba(247,148,29,0.3); }
+    .pay-paypal { background: rgba(0,112,186,0.12);  color: #0070BA; border: 1px solid rgba(0,112,186,0.3); }
+
+    /* ══════════════════════════════════════════
+       PROCESS
+    ══════════════════════════════════════════ */
+    #process { background: var(--bg); }
+    .process-row {
+      display: grid; grid-template-columns: repeat(5, 1fr); position: relative;
+    }
+    .process-row::after {
+      content: ''; position: absolute; top: 27px; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--accent), var(--border), transparent);
+      pointer-events: none;
+    }
+    .proc { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 14px; }
+    .proc-n {
+      width: 54px; height: 54px; border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700;
+      color: var(--muted); background: var(--bg); position: relative; z-index: 1;
+      margin-bottom: 22px; transition: var(--t);
+    }
+    .proc:hover .proc-n { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+    .proc h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .proc p { font-size: 13px; color: var(--muted); line-height: 1.62; }
+
+    /* ══════════════════════════════════════════
+       PORTFOLIO
+    ══════════════════════════════════════════ */
+    #portfolio { background: var(--bg2); }
+    .port-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .port-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--rl); overflow: hidden; transition: var(--t);
+    }
+    .port-card:hover { border-color: var(--border-a); transform: translateY(-6px); box-shadow: 0 26px 64px rgba(0,0,0,0.5); }
+
+    .pvis {
+      height: 195px; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pvis-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; position: relative; z-index: 2; }
+
+    .pv-renta { background: linear-gradient(135deg,#08122A,#0E1F3D 60%,#08122A); }
+    .pv-renta .pvis-label { color: #60C5F1; }
+    .pv-renta::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 28% 65%, rgba(96,197,241,0.18), transparent 50%), radial-gradient(circle at 78% 25%, rgba(56,189,248,0.1), transparent 40%); }
+
+    .pv-nexa { background: linear-gradient(135deg,#0C0719,#180B30 60%,#0C0719); }
+    .pv-nexa .pvis-label { background: linear-gradient(135deg,#C4B5FD,#7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .pv-nexa::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 60% 40%, rgba(124,58,237,0.22), transparent 55%), radial-gradient(circle at 20% 75%, rgba(167,139,250,0.12), transparent 45%); }
+
+    .pv-nexb { background: linear-gradient(135deg,#070E11,#0B1D23 60%,#070E11); }
+    .pv-nexb .pvis-label { color: #34D399; }
+    .pv-nexb::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 50% 50%, rgba(52,211,153,0.16), transparent 55%), radial-gradient(circle at 80% 20%, rgba(16,185,129,0.1), transparent 40%); }
+
+    .port-body { padding: 26px; }
+    .port-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+    .pt { padding: 4px 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 100px; font-size: 11px; font-weight: 500; color: var(--muted); }
+    .port-body h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
+    .port-body p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .port-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); }
+    .port-stats { display: flex; gap: 18px; }
+    .ps-v { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 19px; font-weight: 700; color: var(--accent); }
+    .ps-k { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .btn-demo {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border: 1px solid var(--border-a);
+      border-radius: 6px; font-size: 12px; font-weight: 600;
+      color: var(--accent); transition: var(--t); white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-demo:hover { background: var(--accent-bg); border-color: var(--accent); }
+    .btn-demo svg { width: 12px; height: 12px; }
+
+    /* ══════════════════════════════════════════
+       PRICING
+    ══════════════════════════════════════════ */
+    #pricing { background: var(--bg); }
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .price-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--rl); padding: 36px; position: relative; transition: var(--t);
+    }
+    .price-card.hot { border-color: var(--accent); background: var(--bg3); }
+    .price-card.hot::before {
+      content: 'Most Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: var(--bg); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px;
+    }
+    .price-card:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(0,0,0,0.4); }
+    .price-tier { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .price-name { font-size: 22px; font-weight: 700; margin-bottom: 18px; }
+    .price-range { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .price-range small { font-size: 14px; font-weight: 400; color: var(--muted); }
+    .price-note { font-size: 12px; color: var(--muted); margin-bottom: 26px; }
+    .price-div { height: 1px; background: var(--border); margin-bottom: 22px; }
+    .price-feats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .price-feat { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--dim); }
+    .price-feat .ck { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+    .btn-po {
+      display: block; width: 100%; padding: 13px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; text-align: center; transition: var(--t);
+      font-family: 'Outfit', sans-serif; border: 1px solid var(--border); color: var(--dim);
+    }
+    .btn-po:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-pf {
+      display: block; width: 100%; padding: 13px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; text-align: center; transition: var(--t);
+      font-family: 'Outfit', sans-serif; background: var(--accent); color: var(--bg);
+    }
+    .btn-pf:hover { background: #14fde3; box-shadow: 0 10px 32px var(--accent-glow); }
+
+    /* ══════════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════════ */
+    #contact { background: var(--bg2); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.45fr; gap: 80px; align-items: start; }
+    .contact-left h3 { font-size: 34px; font-weight: 800; letter-spacing: -0.025em; margin: 12px 0 14px; }
+    .contact-left > p { font-size: 15px; color: var(--muted); line-height: 1.72; margin-bottom: 36px; }
+    .contact-items { display: flex; flex-direction: column; gap: 12px; }
+    .ci {
+      display: flex; align-items: center; gap: 16px;
+      padding: 15px 18px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; transition: var(--t); cursor: pointer;
+    }
+    .ci:hover { border-color: var(--border-a); transform: translateX(4px); }
+    .ci-ico {
+      width: 40px; height: 40px; background: var(--accent-bg);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--accent);
+    }
+    .ci-ico svg { width: 18px; height: 18px; }
+    .ci-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .ci-val { font-size: 14px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
+    .ci-arrow { color: var(--accent); font-size: 12px; margin-left: 2px; }
+
+    /* form */
+    .cform { display: flex; flex-direction: column; gap: 16px; }
+    .fr { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg { display: flex; flex-direction: column; gap: 7px; }
+    .flabel { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .finput, .fselect, .ftextarea {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 13px 15px;
+      font-size: 14px; color: var(--text); font-family: 'Outfit', sans-serif;
+      outline: none; transition: border-color 0.2s; width: 100%;
+    }
+    .finput::placeholder, .ftextarea::placeholder { color: var(--muted); }
+    .finput:focus, .fselect:focus, .ftextarea:focus { border-color: var(--accent); }
+    .ftextarea { resize: vertical; min-height: 120px; }
+    .fselect { appearance: none; cursor: pointer; }
+    .fselect option { background: var(--bg2); }
+    .btn-send {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 14px 30px; background: var(--accent); color: var(--bg);
+      border-radius: 8px; font-size: 15px; font-weight: 700;
+      font-family: 'Outfit', sans-serif; cursor: pointer;
+      align-self: flex-start; transition: var(--t); border: none;
+    }
+    .btn-send:hover { background: #14fde3; transform: translateY(-2px); box-shadow: 0 14px 44px var(--accent-glow); }
+    .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+    .form-msg { padding: 12px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; display: none; }
+    .form-msg.success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: #4ade80; display: block; }
+    .form-msg.error   { background: rgba(255,64,96,0.1);  border: 1px solid rgba(255,64,96,0.3);  color: #f87171; display: block; }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 64px 0 30px; }
+    .footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 56px; }
+    .fbrand .logo { font-size: 21px; margin-bottom: 14px; display: block; }
+    .fbrand p { font-size: 14px; color: var(--muted); line-height: 1.72; margin-bottom: 22px; }
+    .socials { display: flex; gap: 10px; }
+    .soc {
+      width: 36px; height: 36px; border: 1px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: var(--t);
+    }
+    .soc svg { width: 16px; height: 16px; }
+    .soc:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+    .fcol h5 { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 18px; }
+    .fcol ul { display: flex; flex-direction: column; gap: 9px; }
+    .fcol li a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
+    .fcol li a:hover { color: var(--accent); }
+    .footer-bot {
+      padding-top: 28px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bot span { font-size: 13px; color: var(--muted); }
+    .footer-bot a { color: var(--accent); }
+    .footer-legal { display: flex; gap: 20px; align-items: center; }
+    .footer-legal a { font-size: 12px; color: var(--muted); transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--accent); }
+
+    /* ══════════════════════════════════════════
+       FLOATING BUTTONS
+    ══════════════════════════════════════════ */
+    /* WhatsApp floating CTA */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 300;
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px; padding-left: 14px;
+      background: #25D366; color: #fff;
+      border-radius: 100px; font-weight: 700; font-size: 13px;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+      transition: var(--t); transform: translateY(80px); opacity: 0;
+    }
+    .wa-float.visible { transform: translateY(0); opacity: 1; }
+    .wa-float:hover { background: #20bc5a; box-shadow: 0 12px 44px rgba(37,211,102,0.55); transform: translateY(-2px); }
+    .wa-float svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* Back to top */
+    .btt {
+      position: fixed; bottom: 28px; left: 28px; z-index: 300;
+      width: 44px; height: 44px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: var(--t);
+      transform: translateY(80px); opacity: 0;
+    }
+    .btt.visible { transform: translateY(0); opacity: 1; }
+    .btt:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+    .btt svg { width: 18px; height: 18px; }
+
+    /* ══════════════════════════════════════════
+       REVEAL ANIMATIONS
+    ══════════════════════════════════════════ */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .rv.vis { opacity: 1; transform: translateY(0); }
+    .d1{transition-delay:0.08s} .d2{transition-delay:0.16s}
+    .d3{transition-delay:0.24s} .d4{transition-delay:0.32s} .d5{transition-delay:0.40s}
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid var(--border); }
+      .stat:nth-child(4) { border-right: none; }
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .process-row { grid-template-columns: repeat(3,1fr); gap: 36px; }
+      .process-row::after { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .price-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 80px 0; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .services-grid, .port-grid, .price-grid { grid-template-columns: 1fr; }
+      .process-row { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 52px; }
+      .fr { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: clamp(46px, 13vw, 72px); }
+      .wa-float span { display: none; }
+      .wa-float { padding: 12px; border-radius: 50%; }
+    }
+    @media (max-width: 480px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .stat-val { font-size: 40px; }
+      .hero-btns { flex-direction: column; }
+      .btn-primary, .btn-ghost { justify-content: center; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ MOBILE MENU ════ -->
+<div class="mmenu" id="mmenu">
+  <span class="mmenu-close" id="mclose">✕</span>
+  <a href="#home"      onclick="closeM()">Home</a>
+  <a href="#about"     onclick="closeM()">About</a>
+  <a href="#services"  onclick="closeM()">Services</a>
+  <a href="#portfolio" onclick="closeM()">Work</a>
+  <a href="#pricing"   onclick="closeM()">Pricing</a>
+  <a href="#contact"   onclick="closeM()">Contact</a>
+</div>
+
+<!-- ════ NAV ════ -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#home" class="logo">CYBER<em>WAVE</em></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact" class="nav-cta">Discuss Your Project</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section id="home">
+  <div class="hero-ambient"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-wrap">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Based in Los Angeles, CA &nbsp;·&nbsp; Serving the World
+    </div>
+    <h1 class="hero-h1">
+      <span class="line"><span>We Engineer</span></span>
+      <span class="line"><span class="c">Scalable</span></span>
+      <span class="line"><span class="o">Platforms.</span></span>
+    </h1>
+    <p class="hero-p">We engineer scalable web platforms, custom SaaS, and financial tech systems for ambitious businesses across the US, East Africa, and beyond.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Schedule a Discovery Call →</a>
+      <a href="#portfolio" class="btn-ghost">View Our Work</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ════ STATS ════ -->
+<div class="stats-row">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-val"><span class="cnt" data-to="25">0</span><sup>+</sup></div>
+        <div class="stat-lbl">Projects Delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val"><span class="cnt" data-to="98">0</span><sup>%</sup></div>
+        <div class="stat-lbl">Client Satisfaction</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val"><span class="cnt" data-to="3">0</span><sup>+</sup></div>
+        <div class="stat-lbl">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val"><span class="cnt" data-to="8">0</span><sup>+</sup></div>
+        <div class="stat-lbl">Countries Served</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TECH STACK MARQUEE ════ -->
+<div class="marquee-wrap">
+  <p class="marquee-label">Our Tech Stack</p>
+  <div class="marquee-track" aria-hidden="true">
+    <div class="marquee-inner">
+      <span class="marquee-item"><span class="mdot"></span>PHP</span>
+      <span class="marquee-item"><span class="mdot"></span>MySQL</span>
+      <span class="marquee-item"><span class="mdot"></span>JavaScript</span>
+      <span class="marquee-item"><span class="mdot"></span>Python</span>
+      <span class="marquee-item"><span class="mdot"></span>HTML &amp; CSS</span>
+      <span class="marquee-item"><span class="mdot"></span>REST APIs</span>
+      <span class="marquee-item"><span class="mdot"></span>M-Pesa API</span>
+      <span class="marquee-item"><span class="mdot"></span>AirtelMoney</span>
+      <span class="marquee-item"><span class="mdot"></span>TigoPesa</span>
+      <span class="marquee-item"><span class="mdot"></span>Ollama AI</span>
+      <span class="marquee-item"><span class="mdot"></span>yt-dlp</span>
+      <span class="marquee-item"><span class="mdot"></span>ffmpeg</span>
+      <span class="marquee-item"><span class="mdot"></span>PayPal SDK</span>
+      <span class="marquee-item"><span class="mdot"></span>Linux / Oracle Cloud</span>
+      <span class="marquee-item"><span class="mdot"></span>Apache</span>
+    </div>
+    <div class="marquee-inner" aria-hidden="true">
+      <span class="marquee-item"><span class="mdot"></span>PHP</span>
+      <span class="marquee-item"><span class="mdot"></span>MySQL</span>
+      <span class="marquee-item"><span class="mdot"></span>JavaScript</span>
+      <span class="marquee-item"><span class="mdot"></span>Python</span>
+      <span class="marquee-item"><span class="mdot"></span>HTML &amp; CSS</span>
+      <span class="marquee-item"><span class="mdot"></span>REST APIs</span>
+      <span class="marquee-item"><span class="mdot"></span>M-Pesa API</span>
+      <span class="marquee-item"><span class="mdot"></span>AirtelMoney</span>
+      <span class="marquee-item"><span class="mdot"></span>TigoPesa</span>
+      <span class="marquee-item"><span class="mdot"></span>Ollama AI</span>
+      <span class="marquee-item"><span class="mdot"></span>yt-dlp</span>
+      <span class="marquee-item"><span class="mdot"></span>ffmpeg</span>
+      <span class="marquee-item"><span class="mdot"></span>PayPal SDK</span>
+      <span class="marquee-item"><span class="mdot"></span>Linux / Oracle Cloud</span>
+      <span class="marquee-item"><span class="mdot"></span>Apache</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ ABOUT ════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="rv">
+        <div class="about-card">
+          <div class="about-card-sub">Who We Are</div>
+          <p class="about-card-text">Cyber Wave is a digital product studio based in Los Angeles, CA. We design and build web platforms that work — for local businesses, startups, and global clients who demand enterprise-grade results.</p>
+          <div class="about-chips">
+            <div class="chip">Scalable Architecture</div>
+            <div class="chip">Enterprise Security</div>
+            <div class="chip">Client Success</div>
+            <div class="chip">High Performance</div>
+            <div class="chip">LA-Based Studio</div>
+            <div class="chip">Global Quality</div>
+          </div>
+          <div class="about-badge">Est.<br>2022</div>
+        </div>
+      </div>
+      <div class="about-right rv d2">
+        <span class="label">Our Mission</span>
+        <h3>Empowering ambitious businesses with world-class digital systems.</h3>
+        <p>We don't just build software — we solve business problems. Every project gets the same level of engineering discipline: scalable architecture, thoughtful UX, and on-time delivery.</p>
+        <p>From financial technology integrations to full SaaS platforms, we bring together deep technical expertise and a hands-on, client-first approach to every engagement.</p>
+        <a href="#contact" class="about-link">Start a conversation →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SERVICES ════ -->
+<section id="services">
+  <div class="container">
+    <div class="sh rv">
+      <span class="label">What We Build</span>
+      <h2>Services &amp; <em>Solutions</em></h2>
+      <p>From business websites to complex enterprise systems — we handle the full stack.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- Web Applications -->
+      <div class="svc rv d1">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3>Web Applications</h3>
+        <p>Custom full-stack web apps built with PHP, JavaScript, Python, and MySQL. Scalable, secure, and optimized for performance.</p>
+        <ul class="svc-list">
+          <li>Custom dashboards &amp; admin portals</li>
+          <li>SaaS platforms &amp; multi-tenant apps</li>
+          <li>Internal business tools</li>
+          <li>API design &amp; integrations</li>
+        </ul>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="svc rv d2">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+        </div>
+        <h3>E-Commerce &amp; Payments</h3>
+        <p>Full-featured stores with real payment integrations — including East African mobile money networks and international gateways.</p>
+        <ul class="svc-list">
+          <li>Custom checkout flows</li>
+          <li>Inventory &amp; order management</li>
+          <li>Subscription billing systems</li>
+          <li>Analytics &amp; revenue reporting</li>
+        </ul>
+        <div class="pay-badges">
+          <span class="pay-badge pay-mpesa">M-Pesa</span>
+          <span class="pay-badge pay-airtel">AirtelMoney</span>
+          <span class="pay-badge pay-tigo">TigoPesa</span>
+          <span class="pay-badge pay-halotel">Halotel</span>
+          <span class="pay-badge pay-paypal">PayPal</span>
+        </div>
+      </div>
+
+      <!-- Business Platforms -->
+      <div class="svc rv d3">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <h3>Business Platforms</h3>
+        <p>Purpose-built systems for your specific business model — from booking flows to fleet management and clinic portals.</p>
+        <ul class="svc-list">
+          <li>Rental &amp; booking systems</li>
+          <li>Clinic &amp; school portals</li>
+          <li>Fleet &amp; logistics management</li>
+          <li>NGO &amp; nonprofit platforms</li>
+        </ul>
+      </div>
+
+      <!-- AI Products -->
+      <div class="svc rv d1">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+            <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+            <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+            <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+            <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+          </svg>
+        </div>
+        <h3>AI-Powered Products</h3>
+        <p>Intelligent web applications with AI chat, voice interfaces, real-time streaming, and smart automation built in.</p>
+        <ul class="svc-list">
+          <li>AI chat interfaces (Ollama, OpenAI)</li>
+          <li>Voice I/O &amp; SSE streaming</li>
+          <li>Smart automation tools</li>
+          <li>AI-enhanced workflows</li>
+        </ul>
+      </div>
+
+      <!-- UI/UX -->
+      <div class="svc rv d2">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            <path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>
+          </svg>
+        </div>
+        <h3>UI/UX Design</h3>
+        <p>High-fidelity interfaces that convert — designed for real users with clarity, speed, and mobile-first in mind.</p>
+        <ul class="svc-list">
+          <li>Landing pages &amp; portfolio sites</li>
+          <li>Brand-aligned UI systems</li>
+          <li>Mobile-responsive layouts</li>
+          <li>Dark &amp; light theme design</li>
+        </ul>
+      </div>
+
+      <!-- Maintenance -->
+      <div class="svc rv d3">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <h3>Maintenance &amp; Support</h3>
+        <p>Ongoing engineering care for your digital products — updates, security patches, and performance monitoring.</p>
+        <ul class="svc-list">
+          <li>Monthly updates &amp; security patches</li>
+          <li>Performance optimization</li>
+          <li>Uptime monitoring</li>
+          <li>Feature additions &amp; content updates</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROCESS ════ -->
+<section id="process">
+  <div class="container">
+    <div class="sh c rv">
+      <span class="label">How We Work</span>
+      <h2>Our <em>Process</em></h2>
+      <p>A clear, reliable path from first call to final launch — no surprises, no delays.</p>
+    </div>
+    <div class="process-row">
+      <div class="proc rv d1">
+        <div class="proc-n">01</div>
+        <h4>Discovery</h4>
+        <p>We learn your business, goals, and audience to build a solid foundation.</p>
+      </div>
+      <div class="proc rv d2">
+        <div class="proc-n">02</div>
+        <h4>Planning</h4>
+        <p>Scoping, wireframes, and a clear project roadmap before a single line is written.</p>
+      </div>
+      <div class="proc rv d3">
+        <div class="proc-n">03</div>
+        <h4>Build</h4>
+        <p>Scalable architecture, pixel-perfect UI, and regular progress check-ins.</p>
+      </div>
+      <div class="proc rv d4">
+        <div class="proc-n">04</div>
+        <h4>Testing</h4>
+        <p>Cross-device QA, performance audits, and security reviews before launch.</p>
+      </div>
+      <div class="proc rv d5">
+        <div class="proc-n">05</div>
+        <h4>Launch &amp; Scale</h4>
+        <p>Smooth deployment, full handover, and ongoing support as you grow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PORTFOLIO ════ -->
+<section id="portfolio">
+  <div class="container">
+    <div class="sh rv">
+      <span class="label">Selected Work</span>
+      <h2>What We've <em>Built</em></h2>
+      <p>Real systems, real problems solved. Each project was built from the ground up, fully custom.</p>
+    </div>
+    <div class="port-grid">
+
+      <!-- RentaRide -->
+      <div class="port-card rv d1">
+        <div class="pvis pv-renta">
+          <div class="pvis-label">RentaRide</div>
+        </div>
+        <div class="port-body">
+          <div class="port-tags">
+            <span class="pt">PHP / MySQL</span>
+            <span class="pt">Mobile Money</span>
+            <span class="pt">Tanzania</span>
+          </div>
+          <h3>RentaRide Tanzania</h3>
+          <p>Vehicle rental businesses in Tanzania lacked a unified system for local payments and fleet tracking. We engineered a full SaaS rental platform with direct M-Pesa, AirtelMoney, TigoPesa, and Halotel API integrations, real-time fleet management, and a complete admin dashboard.</p>
+          <div class="port-foot">
+            <div class="port-stats">
+              <div><div class="ps-v">4</div><div class="ps-k">Payment APIs</div></div>
+              <div><div class="ps-v">100%</div><div class="ps-k">Local Payments</div></div>
+            </div>
+            <a href="#contact" class="btn-demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Inquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nexa AI -->
+      <div class="port-card rv d2">
+        <div class="pvis pv-nexa">
+          <div class="pvis-label">Nexa AI</div>
+        </div>
+        <div class="port-body">
+          <div class="port-tags">
+            <span class="pt">Ollama</span>
+            <span class="pt">SSE Streaming</span>
+            <span class="pt">Voice Chat</span>
+          </div>
+          <h3>Nexa AI</h3>
+          <p>A self-hosted AI chat interface that demanded real-time streaming, voice I/O, and a native payment checkout — without cloud API lock-in. We built it with Ollama model integration, SSE streaming, full voice support, and an embedded billing flow.</p>
+          <div class="port-foot">
+            <div class="port-stats">
+              <div><div class="ps-v">SSE</div><div class="ps-k">Real-time</div></div>
+              <div><div class="ps-v">Voice</div><div class="ps-k">I/O Support</div></div>
+            </div>
+            <a href="#contact" class="btn-demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Inquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nexabar -->
+      <div class="port-card rv d3">
+        <div class="pvis pv-nexb">
+          <div class="pvis-label">Nexabar</div>
+        </div>
+        <div class="port-body">
+          <div class="port-tags">
+            <span class="pt">PHP</span>
+            <span class="pt">yt-dlp</span>
+            <span class="pt">Multi-Platform</span>
+          </div>
+          <h3>Nexabar</h3>
+          <p>Users needed a unified tool to download media from YouTube, Instagram, TikTok, and Facebook without platform friction. We built a PHP backend with yt-dlp and ffmpeg, automatic OS detection for Windows/Linux compatibility, and a clean dark UI.</p>
+          <div class="port-foot">
+            <div class="port-stats">
+              <div><div class="ps-v">5+</div><div class="ps-k">Platforms</div></div>
+              <div><div class="ps-v">Auto</div><div class="ps-k">OS Detection</div></div>
+            </div>
+            <a href="#contact" class="btn-demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Inquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ PRICING ════ -->
+<section id="pricing">
+  <div class="container">
+    <div class="sh c rv">
+      <span class="label">Investment</span>
+      <h2>Clear <em>Pricing</em></h2>
+      <p>Transparent ranges for every project type. All quotes are tailored to your scope — reach out to discuss.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card rv d1">
+        <div class="price-tier">Starter</div>
+        <div class="price-name">Business Websites</div>
+        <div class="price-range">$1,500 <small>– $5,000</small></div>
+        <div class="price-note">Ideal for small businesses &amp; startups</div>
+        <div class="price-div"></div>
+        <ul class="price-feats">
+          <li class="price-feat"><span class="ck">✓</span> Responsive website design</li>
+          <li class="price-feat"><span class="ck">✓</span> Up to 8 pages</li>
+          <li class="price-feat"><span class="ck">✓</span> Contact form &amp; WhatsApp integration</li>
+          <li class="price-feat"><span class="ck">✓</span> Mobile-first layout</li>
+          <li class="price-feat"><span class="ck">✓</span> Basic SEO setup</li>
+          <li class="price-feat"><span class="ck">✓</span> 1 month free support</li>
+        </ul>
+        <a href="#contact" class="btn-po">Discuss Your Project</a>
+      </div>
+      <div class="price-card hot rv d2">
+        <div class="price-tier">Growth</div>
+        <div class="price-name">E-Commerce &amp; Platforms</div>
+        <div class="price-range">$4,000 <small>– $12,000</small></div>
+        <div class="price-note">For businesses ready to sell &amp; scale</div>
+        <div class="price-div"></div>
+        <ul class="price-feats">
+          <li class="price-feat"><span class="ck">✓</span> Full e-commerce functionality</li>
+          <li class="price-feat"><span class="ck">✓</span> Mobile money integrations</li>
+          <li class="price-feat"><span class="ck">✓</span> Admin dashboard &amp; inventory</li>
+          <li class="price-feat"><span class="ck">✓</span> Order &amp; payment management</li>
+          <li class="price-feat"><span class="ck">✓</span> Analytics &amp; reporting</li>
+          <li class="price-feat"><span class="ck">✓</span> 3 months free support</li>
+        </ul>
+        <a href="#contact" class="btn-pf">Discuss Your Project</a>
+      </div>
+      <div class="price-card rv d3">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-name">SaaS &amp; Custom Systems</div>
+        <div class="price-range">$5,000 <small>– $50,000</small></div>
+        <div class="price-note">Complex apps, SaaS, and large platforms</div>
+        <div class="price-div"></div>
+        <ul class="price-feats">
+          <li class="price-feat"><span class="ck">✓</span> Custom architecture design</li>
+          <li class="price-feat"><span class="ck">✓</span> Multi-user &amp; role-based access</li>
+          <li class="price-feat"><span class="ck">✓</span> API development &amp; integrations</li>
+          <li class="price-feat"><span class="ck">✓</span> Subscription &amp; billing systems</li>
+          <li class="price-feat"><span class="ck">✓</span> Dedicated project management</li>
+          <li class="price-feat"><span class="ck">✓</span> 6 months support &amp; maintenance</li>
+        </ul>
+        <a href="#contact" class="btn-po">Discuss Your Project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Left: info -->
+      <div class="rv">
+        <span class="label">Let's Work Together</span>
+        <div class="contact-left">
+          <h3>Ready to build something <em>exceptional</em>?</h3>
+          <p>Tell us about your project and we'll get back to you within 24 hours with a plan and a quote.</p>
+        </div>
+        <div class="contact-items">
+
+          <a href="mailto:cabrixjr@gmail.com" class="ci">
+            <div class="ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ci-lbl">Send us a message</div>
+              <div class="ci-val">Email us <span class="ci-arrow">→</span></div>
+            </div>
+          </a>
+
+          <a href="https://wa.me/255612442097" class="ci" target="_blank" rel="noopener">
+            <div class="ci-ico">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ci-lbl">Chat with us directly</div>
+              <div class="ci-val">WhatsApp us <span class="ci-arrow">→</span></div>
+            </div>
+          </a>
+
+          <a href="tel:+255612442097" class="ci">
+            <div class="ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l1.42-.85a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ci-lbl">Speak directly</div>
+              <div class="ci-val">Call us <span class="ci-arrow">→</span></div>
+            </div>
+          </a>
+
+          <a href="https://www.google.com/maps/place/Los+Angeles,+CA" class="ci" target="_blank" rel="noopener">
+            <div class="ci-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="ci-lbl">Our location</div>
+              <div class="ci-val">Los Angeles, CA <span class="ci-arrow">→</span></div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="rv d2">
+        <form class="cform" id="cform" onsubmit="sendForm(event)">
+          <div class="fr">
+            <div class="fg">
+              <label class="flabel">Full Name</label>
+              <input type="text" name="from_name" class="finput" placeholder="Your name" required>
+            </div>
+            <div class="fg">
+              <label class="flabel">Email Address</label>
+              <input type="email" name="from_email" class="finput" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flabel">Service Needed</label>
+            <select name="service" class="fselect finput" required>
+              <option value="">Select a service...</option>
+              <option>Business Website</option>
+              <option>E-Commerce Store</option>
+              <option>Web Application / Platform</option>
+              <option>AI-Powered Product</option>
+              <option>Maintenance &amp; Support</option>
+              <option>Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="fr">
+            <div class="fg">
+              <label class="flabel">Estimated Budget</label>
+              <select name="budget" class="fselect finput">
+                <option value="">Budget range...</option>
+                <option>$1,500 – $5,000</option>
+                <option>$5,000 – $15,000</option>
+                <option>$15,000 – $50,000</option>
+                <option>$50,000+</option>
+                <option>Not Sure Yet</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="flabel">Timeline</label>
+              <select name="timeline" class="fselect finput">
+                <option value="">Expected timeline...</option>
+                <option>ASAP</option>
+                <option>1 – 3 Months</option>
+                <option>3 – 6 Months</option>
+                <option>6+ Months</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flabel">Project Brief</label>
+            <textarea name="message" class="ftextarea" placeholder="Tell us about your project, goals, and any key requirements..."></textarea>
+          </div>
+          <div class="form-msg" id="fmsg"></div>
+          <button type="submit" class="btn-send" id="sbtn">Send Message →</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="fbrand">
+        <a href="#home" class="logo">CYBER<em>WAVE</em></a>
+        <p>Building high-performance digital systems for ambitious businesses across the US, East Africa, and beyond. Engineering-first. Client-focused. Results-driven.</p>
+        <div class="socials">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/cabrix_jr" class="soc" target="_blank" rel="noopener" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/cabrix_jr" class="soc" target="_blank" rel="noopener" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <!-- X / Twitter -->
+          <a href="https://twitter.com/cabrix_jr" class="soc" target="_blank" rel="noopener" title="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/cabrix-jr" class="soc" target="_blank" rel="noopener" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <!-- TikTok -->
+          <a href="https://www.tiktok.com/@cabrix_jr" class="soc" target="_blank" rel="noopener" title="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9a8.28 8.28 0 0 0 4.84 1.55V7.12a4.85 4.85 0 0 1-1.07-.43z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="fcol">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Web Applications</a></li>
+          <li><a href="#services">E-Commerce &amp; Payments</a></li>
+          <li><a href="#services">Business Platforms</a></li>
+          <li><a href="#services">AI-Powered Products</a></li>
+          <li><a href="#services">Maintenance &amp; Support</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#process">Our Process</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>Get In Touch</h5>
+        <ul>
+          <li><a href="mailto:cabrixjr@gmail.com">Email Us</a></li>
+          <li><a href="https://wa.me/255612442097" target="_blank" rel="noopener">WhatsApp Us</a></li>
+          <li><a href="tel:+255612442097">Call Us</a></li>
+          <li><a href="https://www.google.com/maps/place/Los+Angeles,+CA" target="_blank" rel="noopener">Los Angeles, CA</a></li>
+          <li><a href="#contact">Schedule a Call</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <span>© 2026 <a href="#home">Cyber Wave</a>. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Security</a>
+      </div>
+      <span>📍 Los Angeles, CA &nbsp;·&nbsp; Serving Globally</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ════ FLOATING WHATSAPP ════ -->
+<a href="https://wa.me/255612442097" class="wa-float" id="waFloat" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+  </svg>
+  <span>Chat with Us</span>
+</a>
+
+<!-- ════ BACK TO TOP ════ -->
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+</button>
+
+<script>
+  // ── EmailJS init ──────────────────────────────
+  (function() {
+    emailjs.init({ publicKey: "EMAILJS_PUBLIC_KEY" });
+  })();
+
+  // ── Nav scroll ───────────────────────────────
+  const nav = document.getElementById('nav');
+  const waFloat = document.getElementById('waFloat');
+  const btt = document.getElementById('btt');
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 36);
+    waFloat.classList.toggle('visible', y > 300);
+    btt.classList.toggle('visible', y > 400);
+  }, { passive: true });
+
+  // ── Mobile menu ──────────────────────────────
+  document.getElementById('burger').addEventListener('click', () => {
+    document.getElementById('mmenu').classList.add('open');
+  });
+  document.getElementById('mclose').addEventListener('click', () => {
+    document.getElementById('mmenu').classList.remove('open');
+  });
+  function closeM() { document.getElementById('mmenu').classList.remove('open'); }
+
+  // ── Counter animation ────────────────────────
+  function runCounter(el) {
+    const target = parseInt(el.dataset.to, 10);
+    const dur = 1800;
+    const start = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    (function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.round(ease(p) * target);
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.cnt').forEach(runCounter);
+      }
+    });
+  }, { threshold: 0.5 }).observe(document.querySelector('.stats-row'));
+
+  // ── Reveal on scroll ─────────────────────────
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' })
+  .observe = (() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('vis');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+    return obs.observe.bind(obs);
+  })();
+
+  // ── Form submission with EmailJS ─────────────
+  function sendForm(e) {
+    e.preventDefault();
+    const btn  = document.getElementById('sbtn');
+    const msg  = document.getElementById('fmsg');
+    const form = document.getElementById('cform');
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    msg.className = 'form-msg';
+    msg.style.display = 'none';
+
+    emailjs.sendForm('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_ID', form)
+      .then(() => {
+        msg.textContent = '✓ Message sent! We\'ll get back to you within 24 hours.';
+        msg.className = 'form-msg success';
+        form.reset();
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+      })
+      .catch((err) => {
+        console.error('EmailJS error:', err);
+        msg.textContent = '✗ Something went wrong. Please try WhatsApp or email us directly.';
+        msg.className = 'form-msg error';
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+      });
+  }
+</script>
+</body>
+</html>
