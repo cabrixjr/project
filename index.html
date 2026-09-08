@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJ Web Solutions — Websites, Apps & Systems in Dar es Salaam</title>
+<meta name="description" content="AJ Web Solutions builds websites, apps, booking systems and portals for businesses in Dar es Salaam, Tanzania.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Link External CSS -->
+<link rel="stylesheet" href="style.css">
+<!-- EmailJS Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs-com/3.2.0/email.min.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="logo">AJ WEB <span>SOLUTIONS</span></div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#order">Order</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#order" class="nav-cta">Start Your Project</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <div class="container">
+    
+    <!-- Hero Interactive Website Showcase Slider -->
+    <div class="hero-slider-wrap">
+      <button class="hero-nav-btn prev" id="heroPrev">‹</button>
+      <button class="hero-nav-btn next" id="heroNext">›</button>
+      
+      <div class="hero-slider" id="heroTrack">
+        <!-- Slide 1: E-Commerce -->
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80" alt="E-commerce Store Development" referrerpolicy="no-referrer">
+          <div class="hero-slide-caption">
+            <div>
+              <h3>E-Commerce & Online Stores</h3>
+              <p>Custom online shops integrated with Vodacom M-Pesa, Tigo Pesa, and Airtel Money.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2: Corporate Websites -->
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Corporate Business Websites" referrerpolicy="no-referrer">
+          <div class="hero-slide-caption">
+            <div>
+              <h3>Corporate Business Websites</h3>
+              <p>Modern, responsive platforms built to elevate brand authority and boost sales conversions.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3: Web Portals & Dashboards -->
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="School & Office Portals" referrerpolicy="no-referrer">
+          <div class="hero-slide-caption">
+            <div>
+              <h3>School & Enterprise Portals</h3>
+              <p>Custom cloud dashboards for managing students, staff records, and office data.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 4: Restaurant & Food Delivery -->
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80" alt="Restaurant & Booking Systems" referrerpolicy="no-referrer">
+          <div class="hero-slide-caption">
+            <div>
+              <h3>Restaurant & Booking Systems</h3>
+              <p>Digital menus, online table booking, and direct WhatsApp order management.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 5: Mobile Apps -->
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80" alt="Mobile Applications" referrerpolicy="no-referrer">
+          <div class="hero-slide-caption">
+            <div>
+              <h3>Cross-Platform Mobile Apps</h3>
+              <p>Android and iOS applications engineered for high performance and seamless UI.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
+
+    <!-- Hero Descriptions -->
+    <div>
+      <div class="eyebrow-pill"><span class="dot"></span> Based in Dar es Salaam, building for all of Tanzania</div>
+      <h1>Websites and apps that get your <span class="accent">business online</span> and get you paid</h1>
+      <p class="lead">AJ Web Solutions designs and builds business websites, online stores, booking systems and apps — with mobile money and NIDA integration built for the Tanzanian market.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Our Services</button>
+        <a class="btn btn-ghost" href="#order">Start Your Project</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">9+</div><div class="label">Types of builds</div></div>
+        <div><div class="num">100%</div><div class="label">Mobile-money ready</div></div>
+        <div><div class="num">DSM</div><div class="label">Local & remote support</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <h2>What we build</h2>
+      <p>Pick the service that fits your business — every price includes design, build and launch.</p>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- ================= ORDER FORM ================= -->
+<section class="bg-soft" id="order">
+  <div class="container order-wrap">
+    <div class="order-side">
+      <h2>Tell us what you need</h2>
+      <p>Fill the form and we'll reply with a clear project proposal and timeline — usually within a few hours.</p>
+      <div class="contact-links">
+        <a class="contact-link call" href="tel:+255612442097"><span class="icon">📞</span> Call +255 612 442 097</a>
+        <a class="contact-link wa" href="https://wa.me/255612442097" target="_blank" rel="noopener"><span class="icon">💬</span> WhatsApp us directly</a>
+      </div>
+    </div>
+    <form class="order-form" id="orderForm">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" required placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="phone">Phone number</label>
+        <input type="tel" id="phone" name="phone" required placeholder="+255 6XX XXX XXX">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="service">Service</label>
+        <select id="service" name="service" required></select>
+      </div>
+      <div class="field">
+        <label for="message">Tell us more</label>
+        <textarea id="message" name="message" placeholder="What's the project about? Any deadline or reference sites you like?"></textarea>
+      </div>
+      <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;">Submit Request</button>
+      <div class="submit-status" id="formStatus"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <h2>What clients say</h2>
+      <p>A few words from businesses we've built for.</p>
+    </div>
+    <div class="reviews-slider">
+      <button class="review-arrow prev" id="reviewPrev" aria-label="Previous">‹</button>
+      <button class="review-arrow next" id="reviewNext" aria-label="Next">›</button>
+      <div class="review-track">
+        <div class="review-slides" id="reviewSlides"></div>
+      </div>
+      <div class="review-dots" id="reviewDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">AJ WEB <span>SOLUTIONS</span></div>
+        <p style="max-width:260px;font-size:14px;color:#AFC0DE;">Websites, apps and systems built in Dar es Salaam, for businesses across Tanzania and beyond.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#order">Start Project</a>
+        <a href="#reviews">Reviews</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+255612442097">+255 612 442 097</a>
+        <a href="https://wa.me/255612442097" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="mailto:cabrixjr@gmail.com">cabrixjr@gmail.com</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="https://instagram.com/cabrix_jr" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://facebook.com/cabrix_jr" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://tiktok.com/@cabrix_jr" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="year"></span> AJ Web Solutions. Based in Dar es Salaam, Tanzania. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Link External JavaScript -->
+<script src="script.js"></script>
+</body>
+</html>
